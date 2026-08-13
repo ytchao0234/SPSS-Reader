@@ -9,6 +9,7 @@ numpy = "*"
 pyinstaller = "*"
 pywin32-ctypes = "*"
 openpyxl = "*"
+pefile = "*"
 
 [dev-packages]
 
