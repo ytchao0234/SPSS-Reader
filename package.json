@@ -15,6 +15,7 @@
   "build": {
     "appId": "com.example.spssreader",
     "productName": "SPSS Reader",
+    "publish": null,
     "asar": true,
     "directories": {
       "output": "release"
