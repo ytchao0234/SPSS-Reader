@@ -1,0 +1,70 @@
+{
+  "name": "my-app",
+  "private": true,
+  "version": "0.0.0",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "electron": "electron .",
+    "start": "concurrently \"npm run dev\" \"npm run electron\"",
+    "build:vue": "vite build",
+    "build:electron": "electron-builder",
+    "dist": "npm run build:vue && npm run build:electron",
+    "preview": "vite preview"
+  },
+  "build": {
+    "appId": "com.example.spssreader",
+    "productName": "SPSS Reader",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "dist",
+        "to": "dist"
+      },
+      {
+        "from": "python",
+        "to": "python"
+      },
+      {
+        "from": "README.md",
+        "to": "README.md"
+      }
+    ],
+    "win": {
+      "icon": "icon.iconset",
+      "target": "nsis"
+    },
+    "mac": {
+      "icon": "icon.icns",
+      "target": "dmg"
+    },
+    "linux": {
+      "icon": "icon.iconset",
+      "target": "AppImage"
+    }
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "better-sqlite3": "^13.0.1",
+    "marked": "^18.0.5",
+    "pinia": "^4.0.2",
+    "vue": "^3.5.34",
+    "vuetify": "^4.1.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.6",
+    "concurrently": "^9.2.4",
+    "electron": "^42.3.3",
+    "electron-builder": "^26.15.3",
+    "vite": "^8.0.12",
+    "vite-plugin-vuetify": "^2.1.3"
+  }
+}
