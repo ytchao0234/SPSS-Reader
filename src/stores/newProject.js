@@ -29,7 +29,7 @@ export const newProjectStore = defineStore('new_project', () => {
   // Step 5 Select SPSS Export
   const spss_export_selected = ref(null)
 
-  // Step 6 Set Analysis Methods
+  // Step 6 Validate Analysis Methods
   const is_spss_export_sheet_loading = ref(false)
   const readSPSSExportSheetNames = ref(0) // event
   function triggerReadSPSSExportSheetNames() {
@@ -94,7 +94,7 @@ export const newProjectStore = defineStore('new_project', () => {
     // Step 5 Select SPSS Export
     spss_export_selected,
 
-    // Step 6 Set Analysis Methods
+    // Step 6 Validate Analysis Methods
     is_spss_export_sheet_loading, 
     readSPSSExportSheetNames, triggerReadSPSSExportSheetNames,
     is_spss_export_valid,

@@ -18,7 +18,7 @@
       </v-card-title>
 
       <div class="d-flex align-start w-100" v-if="!store.is_user_data_sheet_loading">
-        <v-card class="w-40">
+        <v-card class="w-40" flat>
           <template v-slot:text>
             <v-text-field
               v-model="sheet_search"
@@ -38,7 +38,7 @@
               :items="sheet_items"
               item-value="sheet_name"
               show-select
-              height="calc(100vh - 480px)"
+              height="calc(100vh - 500px)"
               fixed-header
               :search="sheet_search"
             />
@@ -75,17 +75,18 @@
           class="w-60" 
           v-if="store.is_user_data_sheet_applied"
           :loading="store.is_verify_user_data_loading"
+          flat
         >
           <v-card-title v-if="store.is_verify_user_data_loading" class="text-center">
             {{ store.is_verify_user_data_loading ? 'Loading...' : '' }}
           </v-card-title>
 
           <div v-if="!store.is_verify_user_data_loading">
-            <v-card v-if="!store.verify_result.success">
+            <v-card v-if="!store.verify_result.success" flat>
               <v-alert
                 type="error"
                 border="top"
-                height="calc(100vh - 340px)"
+                height="calc(100vh - 355px)"
                 class="overflow-y-auto text-pre-wrap err-msg-alert"
               >
                 {{ store.verify_result.err_msg }}
@@ -102,7 +103,7 @@
                 single-line
               ></v-text-field>
 
-              <div class="mt-4" style="height: calc(100vh - 410px); overflow-y: auto; padding: 10px;">
+              <div class="mt-4" style="height: calc(100vh - 430px); overflow-y: auto; padding: 10px;">
                 <template v-for="(group, index) in dpvar_filtered_groups" :key="index">
                   <v-text-field
                     v-model="group.title"

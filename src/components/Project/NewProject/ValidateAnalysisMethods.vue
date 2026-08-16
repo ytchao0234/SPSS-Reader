@@ -1,9 +1,9 @@
 <template>
-  <div class="set_analysis_methods">
+  <div class="validate_analysis_methods">
     <v-card flat :loading="store.is_spss_export_sheet_loading">
       <v-card-title>
         <div class="d-flex align-center ga-4">
-          <h3 class="my-0">Set Analysis Methods</h3>
+          <h3 class="my-0">Validate Analysis Methods</h3>
 
           <IconTooltip
             type="info"
@@ -32,7 +32,7 @@
         :headers="utility.analysis_method_headers"
         :items="dpvars_items"
         item-value="id"
-        height="calc(100vh - 300px)"
+        height="calc(100vh - 320px)"
         fixed-header
         style="overflow-x: auto;"
       >

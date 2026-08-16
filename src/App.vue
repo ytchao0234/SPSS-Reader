@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-app-bar density="compact" title="SPSS Reader">
+    <v-app-bar density="compact" title="SPSS Results Reader">
       <v-btn
         v-for="group in groups"
         :key="group.name"

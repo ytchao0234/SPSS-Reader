@@ -166,7 +166,7 @@ const props = defineProps({
   },
   height: {
     type: String,
-    default: 'calc(100vh - 230px)'
+    default: 'calc(100vh - 240px)'
   }
 })
 

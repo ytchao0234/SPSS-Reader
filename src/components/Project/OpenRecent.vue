@@ -34,7 +34,7 @@
         :headers="headers"
         :items="project_items"
         item-value="id"
-        height="calc(100vh - 230px)"
+        height="calc(100vh - 240px)"
         :show-select="select_mode"
         :search="search"
         show-expand

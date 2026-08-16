@@ -1,4 +1,4 @@
-name: Build SPSS Reader
+name: Build SPSS Results Reader
 
 on:
   push:
@@ -92,7 +92,7 @@ jobs:
       - name: Upload build
         uses: actions/upload-artifact@v4
         with:
-          name: SPSS-Reader-${{ matrix.name }}
+          name: SPSS-Results-Reader-${{ matrix.name }}
           path: release/
 
       # -------------------------

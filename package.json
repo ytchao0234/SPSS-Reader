@@ -13,8 +13,8 @@
     "preview": "vite preview"
   },
   "build": {
-    "appId": "com.example.spssreader",
-    "productName": "SPSS Reader",
+    "appId": "com.example.spss-results-reader",
+    "productName": "SPSS Results Reader",
     "publish": null,
     "asar": true,
     "directories": {

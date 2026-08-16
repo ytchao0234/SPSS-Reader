@@ -39,24 +39,24 @@ export const utilityStore = defineStore('utility', () => {
     {
         title: "Between-subjects Factor",
         key: "factor",
-        width: "30%"
+        width: "50%"
     },
     {
         title: "Condition",
         key: "condition",
-        width: "70%"
+        width: "50%"
     },
   ]
   const ws_headers = [
     {
         title: "Within-subjects Factor",
         key: "factor",
-        width: "30%"
+        width: "50%"
     },
     {
         title: "Condition",
         key: "condition",
-        width: "70%"
+        width: "50%"
     },
   ]
   const factor_headers_in_projects = [
@@ -68,12 +68,12 @@ export const utilityStore = defineStore('utility', () => {
     {
         title: "Title",
         key: "title",
-        width: "20%"
+        width: "21.5%"
     },
     {
         title: "Factor",
         key: "factor",
-        width: "70%"
+        width: "68.5%"
     },
   ]
   const file_headers_in_projects = [

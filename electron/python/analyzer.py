@@ -45,14 +45,14 @@ NONPARAMETRIC_TEST_TABLE_NAMES = [ # [Start Row (included), End Row (excluded)]
 ]
 NONPARAMETRIC_TEST_TABLE_NAMES_0 = [table_name[0] for table_name in NONPARAMETRIC_TEST_TABLE_NAMES]
 
-KRUSKAL_WALLIS_TEST_SECTION_NAME_START_WITH = 'KruskalWallisTest'
+KRUSKAL_WALLIS_H_TEST_SECTION_NAME_START_WITH = 'KruskalWallisHTest'
 MANN_WHITNEY_U_TEST_SECTION_NAME_START_WITH = 'MannWhitneyUTest'
 
 NONPARAMETRIC_TEST_ERROR_MESSAGE = (
     f'The SPSS Export sheet may contain any number of Kruskal-Wallis and Mann-Whitney U test results.\n\n'
 
     f'For the Kruskal-Wallis Test, the section names must follow the required format:\n'
-    f'"{KRUSKAL_WALLIS_TEST_SECTION_NAME_START_WITH}-FactorName123-1ConditionA,2ConditionB,3ConditionC"\n'
+    f'"{KRUSKAL_WALLIS_H_TEST_SECTION_NAME_START_WITH}-FactorName123-1ConditionA,2ConditionB,3ConditionC"\n'
     f'The number of conditions must be at least three.\n\n'
 
     f'For the Mann-Whitney U Test, the section names must follow the required format:\n'
@@ -70,7 +70,7 @@ def verify_group_number_mann(group_number:int):
     return group_number == 2
 
 NONPARAMETRIC_TEST_VALIDATORS = {
-    KRUSKAL_WALLIS_TEST_SECTION_NAME_START_WITH: verify_group_number_kruskal,
+    KRUSKAL_WALLIS_H_TEST_SECTION_NAME_START_WITH: verify_group_number_kruskal,
     MANN_WHITNEY_U_TEST_SECTION_NAME_START_WITH: verify_group_number_mann,
 }
 
@@ -266,7 +266,7 @@ def canDoUnivariateANOVA(df:pd.DataFrame, df_first_col_str:pd.Series, bs_dict:di
     }, bs_dict, ws_dict
 
 def canDoNonparametricTest(df:pd.DataFrame, df_first_col_str:pd.Series, bs_dict:dict=None, ws_dict:dict=None) -> tuple[dict, dict, dict]:
-    k_indices = get_text_indices(df_first_col_str, KRUSKAL_WALLIS_TEST_SECTION_NAME_START_WITH)
+    k_indices = get_text_indices(df_first_col_str, KRUSKAL_WALLIS_H_TEST_SECTION_NAME_START_WITH)
     m_indices = get_text_indices(df_first_col_str, MANN_WHITNEY_U_TEST_SECTION_NAME_START_WITH)
 
     if not (len(k_indices) + len(m_indices)) > 0:
@@ -765,7 +765,7 @@ def readMannWhitneyRanks(df:pd.DataFrame, df_first_col_str:pd.Series, dpvar:str,
     else:
         return f"{cond_dict[COND_IDX_2]} > {cond_dict[COND_IDX_1]}"
 
-def readKruskalWallisTestStatistics(df:pd.DataFrame, df_first_col_str:pd.Series, factor:str) -> dict:
+def readKruskalWallisHTestStatistics(df:pd.DataFrame, df_first_col_str:pd.Series, factor:str) -> dict:
     mask_start = df_first_col_str.str.contains("Test Statistics", na=False, regex=False)
     start_index = df[mask_start].index[0]
     end_index = len(df)
@@ -777,7 +777,7 @@ def readKruskalWallisTestStatistics(df:pd.DataFrame, df_first_col_str:pd.Series,
         -1
     )
     if SIG_ROW_IDX == -1:
-        print(f'[readKruskalWallisTestStatistics]: sig row not found.', file=sys.stderr)
+        print(f'[readKruskalWallisHTestStatistics]: sig row not found.', file=sys.stderr)
         return None
     SIG_ROW = list(table.iloc[SIG_ROW_IDX, :])
 
@@ -787,7 +787,7 @@ def readKruskalWallisTestStatistics(df:pd.DataFrame, df_first_col_str:pd.Series,
         -1
     )
     if DPVAR_ROW_IDX == -1:
-        print(f'[readKruskalWallisTestStatistics]: dpvar row not found.', file=sys.stderr)
+        print(f'[readKruskalWallisHTestStatistics]: dpvar row not found.', file=sys.stderr)
         return None
     DPVAR_ROW = [x.replace('_', '') if isinstance(x, str) else x for x in list(table.iloc[DPVAR_ROW_IDX, :])]
 
@@ -1033,14 +1033,14 @@ def queryANOVASigResultTable(data_df:pd.DataFrame, spss_df:pd.DataFrame, spss_df
     ETA = float(table.iloc[DF1_ROW_INDEX, ETA_COL_INDEX])
     ETA_STRING = f'{ETA:.3f}'.lstrip("0")
 
-    test_statistics = f"$F({DF1_STRING},{DF2_STRING}) = {F_STRING}, {P_STRING}, \\eta^2_p = {ETA_STRING}$"
+    test_statistics = f"$F({DF1_STRING},{DF2_STRING}) = {F_STRING}, {P_STRING}, \\eta_p^2 = {ETA_STRING}$"
     if df_row_offset:
         test_statistics += ", Greenhouse-Geisser corrected"
     result['test_statistics'] = [test_statistics]
     result['descriptive_statistics'] = getEstimates(data_df, spss_df, spss_df_first_col_str, args, QUERY_SRC_NAME, bs_dict, ws_dict)
     return result
 
-def getKruskalWallisTestStatistics(rank_table:pd.DataFrame, test_table:pd.DataFrame) -> str:
+def getKruskalWallisHTestStatistics(rank_table:pd.DataFrame, test_table:pd.DataFrame) -> str:
     RANK_FIRST_COL = [x.replace('_', '') if isinstance(x, str) else x for x in list(rank_table.iloc[:, 0])]
     RANK_DPVAR_ROW_IDX = RANK_FIRST_COL.index(args['dpvar'])
     N_ROW_IDX = RANK_DPVAR_ROW_IDX + 2
@@ -1069,7 +1069,7 @@ def getKruskalWallisTestStatistics(rank_table:pd.DataFrame, test_table:pd.DataFr
     P_STRING = 'p < .001' if P < 0.001 else f'p = ' + f'{P:.3f}'.lstrip("0")
     K = DF + 1
     ETA = (H - K + 1) / (N - K)
-    ETA_STRING = '\\eta^2_H < .01' if ETA < 0.01 else f'\\eta^2_H = ' + f'{ETA:.2f}'.lstrip("0")
+    ETA_STRING = '\\eta_H^2 < .01' if ETA < 0.01 else f'\\eta_H^2 = ' + f'{ETA:.2f}'.lstrip("0")
 
     return f'$H({DF_STRING}) = {H:.3f}, {P_STRING}, {ETA_STRING}$'
 
@@ -1113,7 +1113,7 @@ def queryNonparametricSigResultTable(data_df:pd.DataFrame, spss_df:pd.DataFrame,
     if MANN_WHITNEY_U_TEST_SECTION_NAME_START_WITH in EFFECT:
         factor, _ = readBetweenSubjectFactorFromSectionName(EFFECT)
         mask_k = (
-            spss_df_first_col_str.str.contains(KRUSKAL_WALLIS_TEST_SECTION_NAME_START_WITH, na=False, regex=False)
+            spss_df_first_col_str.str.contains(KRUSKAL_WALLIS_H_TEST_SECTION_NAME_START_WITH, na=False, regex=False)
             &
             spss_df_first_col_str.str.contains(factor, na=False, regex=False)
         )
@@ -1151,12 +1151,12 @@ def queryNonparametricSigResultTable(data_df:pd.DataFrame, spss_df:pd.DataFrame,
     result['test_statistics'] = []
 
     if k_test_table is not None:
-        result['test_statistics'].append(getKruskalWallisTestStatistics(k_rank_table, k_test_table))
+        result['test_statistics'].append(getKruskalWallisHTestStatistics(k_rank_table, k_test_table))
 
     result['test_statistics'].append(
         getMannWhitneyTestStatistics(rank_table, test_table, bonferroni) \
             if MANN_WHITNEY_U_TEST_SECTION_NAME_START_WITH in EFFECT \
-            else getKruskalWallisTestStatistics(rank_table, test_table)
+            else getKruskalWallisHTestStatistics(rank_table, test_table)
     )
 
     bs_dict = getAllBetweenSubjectFactorsFromSectionName([EFFECT])
@@ -1192,7 +1192,7 @@ def getUnivariateANOVASigResultTable(df:pd.DataFrame, df_first_col_str:pd.Series
     return sig_results
 
 def getNonparametricSigResultTable(df:pd.DataFrame, df_first_col_str:pd.Series, bs_dict:dict=None, ws_dict:dict=None):
-    k_indices = get_text_indices(df_first_col_str, KRUSKAL_WALLIS_TEST_SECTION_NAME_START_WITH)
+    k_indices = get_text_indices(df_first_col_str, KRUSKAL_WALLIS_H_TEST_SECTION_NAME_START_WITH)
     k_section_names = [str(df_first_col_str.iloc[i]) for i in k_indices]
     k_bs_dict = getAllBetweenSubjectFactorsFromSectionName(k_section_names)
     k_indices.append(len(df_first_col_str)) # end of df
@@ -1210,7 +1210,7 @@ def getNonparametricSigResultTable(df:pd.DataFrame, df_first_col_str:pd.Series, 
         if factor in k_bs_dict:
             j = next(j for j, x in enumerate(k_section_names) if factor in x.split('-')[1])
             k_df_section = df.iloc[k_indices[j]:k_indices[j + 1]].reset_index(drop=True)
-            k_results = readKruskalWallisTestStatistics(
+            k_results = readKruskalWallisHTestStatistics(
                 k_df_section, k_df_section.iloc[:, 0].astype(str), factor
             )
 
@@ -1375,7 +1375,7 @@ def verify_user_data(result_path, filepath, sheet_name_list, bs_items, ws_items)
         if cur_err_msg:
             if result['err_msg']:
                 result['err_msg'] += '\n\n'
-            result['err_msg'] += f'{sheet_name} is not valid to use:\n' + '\n'.join(cur_err_msg)
+            result['err_msg'] += f'Sheet "{sheet_name}" is not valid to use:\n' + '\n'.join(cur_err_msg)
 
     result['success'] = not result['err_msg']
 

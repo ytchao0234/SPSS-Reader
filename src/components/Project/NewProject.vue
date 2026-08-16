@@ -14,7 +14,7 @@
             title="Select Factor Setting"
             single_select
             :hint_message="utility.select_factor_hint_msg"
-            height="calc(100vh - 400px)"
+            height="calc(100vh - 420px)"
           />
         </div>
       </template>
@@ -28,7 +28,7 @@
             table_name="user_data"
             single_select
             :hint_message="utility.select_user_data_hint_msg"
-            height="calc(100vh - 400px)"/>
+            height="calc(100vh - 420px)"/>
         </div>
       </template>
 
@@ -47,12 +47,12 @@
             table_name="spss_export"
             single_select
             :hint_message="utility.select_spss_export_hint_msg"
-            height="calc(100vh - 400px)"/>
+            height="calc(100vh - 420px)"/>
         </div>
       </template>
 
       <template v-slot:item.6>
-        <SetAnalysisMethods />
+        <ValidateAnalysisMethods />
       </template>
 
       <template v-slot:actions="{ next, prev }">
@@ -119,7 +119,7 @@ import SetProjectName from '@/components/Project/NewProject/SetProjectName.vue';
 import Factor from '@/components/Data/Factor.vue';
 import ExcelFileHandler from '@/components/Props/Data/ExcelFileHandler.vue';
 import SelectUserDataSheets from './NewProject/SelectUserDataSheets.vue';
-import SetAnalysisMethods from './NewProject/SetAnalysisMethods.vue';
+import ValidateAnalysisMethods from './NewProject/ValidateAnalysisMethods.vue';
 
 const step = ref(1)
 const pages = Array(6).fill('')

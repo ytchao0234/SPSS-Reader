@@ -11,6 +11,9 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
@@ -39,6 +42,56 @@
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 0.5px solid #d1d9e0;
+  scroll-margin-top: 60px;
+}
+
+.markdown-body h3 {
+  padding-bottom: 0.3em;
+  scroll-margin-top: 60px;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 0.5px solid #ddd;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.markdown-body th {
+  background: #2e2e2e;
+  font-weight: 600;
+}
+
+.markdown-body code {
+  font-size: 11.5pt;
+  background-color: #3e3e3e;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.markdown-body pre {
+  background-color: #3e3e3e;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.markdown-body blockquote {
+  background-color: #252a2b;
+  border-left: 4px solid #464a4a;
+  padding: 1px 12px;
+  margin: 16px 0;
+  border-radius: 6px;
 }
 
 .half-opacity {
