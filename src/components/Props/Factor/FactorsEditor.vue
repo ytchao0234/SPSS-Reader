@@ -5,7 +5,7 @@
       :items="my_bs_items"
       style="background-color: transparent;"
       hide-default-footer
-      >
+    >
       <template #item.factor="{ item }">
         <v-text-field
           v-model="item.factor"

@@ -67,6 +67,10 @@ const props = defineProps({
     type: String,
     default: ""
   },
+  bgColor: {
+    type: String,
+    default: ""
+  },
   density: {
     type: String,
     default: 'compact',
@@ -140,6 +144,10 @@ const icon_color = computed(() => {
 })
 
 const tooltip_color = computed(() => {
+  if (props.bgColor) {
+    return props.bgColor
+  }
+
   switch (props.type) {
     case 'info':
       return 'grey-darken-3'

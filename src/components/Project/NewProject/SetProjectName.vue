@@ -7,13 +7,13 @@
 
           <IconTooltip
             type="info"
-            location="bottom"
+            location="top"
             :hint_message="utility.set_project_name_hint_msg"
           />
         </div>
       </v-card-title>
 
-      <v-text-field v-model="store.project_name" label="Project Name"></v-text-field>
+      <v-text-field v-model="store.project_name" label="Project Name" autofocus></v-text-field>
     </v-card>
   </div>
 </template>

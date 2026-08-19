@@ -25,7 +25,7 @@
         height="600"
       >
         <v-card-text class="overflow-y-auto d-flex flex-grow-1 ga-2">
-          <div class="w-40 d-flex flex-column">
+          <div class="w-40 d-flex flex-column overflow-y-auto ">
             <!-- Left -->
             <div class="flex-grow-1">
               <v-autocomplete
@@ -39,6 +39,7 @@
               />
 
               <v-autocomplete
+                :disabled="!sheet_selected"
                 v-model="dpvar_selected"
                 :items="dpvar_items"
                 label="Dependent Variable"
@@ -78,8 +79,18 @@
             <!-- Right -->
             <div class="flex-grow-1 h-100">
               <v-card class="h-100 overflow-y-auto" :loading="loading">
-                <v-card-title style="font-size: 18px;">
-                  Output
+                <v-card-title class="d-flex align-center ga-2" style="font-size: 18px;">
+                  <span>Output</span>
+
+                  <IconTooltip
+                    v-if="output_hint"
+                    type="info"
+                    location="top"
+                    size="18"
+                    width="50%"
+                    bg-color="grey-darken-1"
+                    :hint_message="output_hint"
+                  />
                 </v-card-title>
 
                 <v-card-text>
@@ -244,6 +255,7 @@ const emit = defineEmits([
 
 const dialog = ref(false)
 const loading = ref(false)
+const output_hint = ref("")
 const expand = ref([])
 
 const method = computed(() => {
@@ -388,6 +400,7 @@ async function onApply() {
   if (!canApply()) return
   loading.value = true
   preview.value = ''
+  output_hint.value = ''
   expand.value = []
 
   const args = {
@@ -422,6 +435,7 @@ async function onApply() {
       ...item
     }))
 
+    output_hint.value = args.dpvar + '\n' + args.effect + (args.options.length ? '\n' + JSON.stringify(args.options) : '')
     loading.value = false
   })
   .catch(err => {

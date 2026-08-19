@@ -28,7 +28,7 @@ Hopefully, this makes reading your SPSS results a bit less painful and saves you
     - [Repeated Measures ANOVA](#repeated-measures-anova)
     - [Univariate ANOVA](#univariate-anova)
     - [Mann-Whitney U Test](#mann-whitney-u-test)
-    - [Kruskal-Wallis Test](#kruskal-wallis-test)
+    - [Kruskal-Wallis H Test](#kruskal-wallis-h-test)
     - [Export Analysis Results](#export-analysis-results)
 - [Create a New Project in the System](#create-a-new-project-in-the-system)
     - [New Project Steps](#new-project-steps)
@@ -116,7 +116,8 @@ The columns in your Excel file should include:
 
 * All **Between-subjects Factors**
 * All **Dependent Variables**
-* Dependent variables separated according to the levels of any **Within-subjects Factors**
+* Dependent variables should be separated according to the levels of the **Within-subjects Factors** used in the analysis. 
+   * You only need to split a dependent variable based on the Within-subjects Factors relevant to that particular analysis. Therefore, different dependent variables may be split differently, and some dependent variables may not need to be split at all.
 
 For example, suppose a study has:
 
@@ -130,7 +131,7 @@ For example, suppose a study has:
   * **Accuracy**
   * **ResponseTime**
 
-Because **TaskType** and **Difficulty** are within-subjects factors, each of the dependent variable should be separated according to **each combination of their levels**:
+Because **TaskType** and **Difficulty** are within-subjects factors, each dependent variable that needs to be compared across these two within-subjects factors should be separated according to **each combination of their levels**:
 
 | UserID | AgeGroup | TrainingMethod | Memory_Easy_Accuracy | Memory_Hard_Accuracy | Reaction_Easy_Accuracy | Reaction_Hard_Accuracy | Attention_Easy_Accuracy | Attention_Hard_Accuracy | ... |
 | ------- | --------- | --------------- | -------------------: | -------------------: | ---------------------: | ---------------------: | ----------------------: | ----------------------: | --- |
@@ -158,13 +159,15 @@ For example:
 * **Attention_Easy_ResponseTime**
 * **Attention_Hard_ResponseTime**
 
-The conditions in the column name must be ordered according to the order of the corresponding factors. The Dependent Variable should always appear at the end of the column name. **The underscore `_` must be used exclusively as the separator, and all spaces must be removed.**
+The conditions in the column name must be ordered according to the order of the corresponding factors. The **Dependent Variable** should always appear at the end of the column name.
+
+**The underscore `_` must be used exclusively as the separator between conditions and the Dependent Variable, and it must appear only in Dependent Variable Data Fields.** All spaces must be removed.
 
 You do not need to use all Within-subjects Factors for every Dependent Variable. Include only the Within-subjects Factors that are relevant to each Dependent Variable based on your research design.
 
 > **Important Notes**
-> 1. **Avoid using the same column name for multiple conditions.**
->    Each column should have a unique name that clearly identifies the corresponding conditions and dependent variable.
+> 1. **For Dependent Variables Without Within-Subjects Comparisons.**
+>    If a Dependent Variable does not need to be compared across any **Within-subjects Factors** (e.g., subjective questionnaire scores), its column name must still begin with an underscore, such as `_DependentVariable`. This allows the system to identify the column as a **Dependent Variable** even when it is not separated according to any Within-subjects Factors.
 > 2. **Keep the number of columns consistent with the selected Within-subjects Factors.**
 >    Once you decide to divide a Dependent Variable according to a specific set of Within-subjects Factors, all data fields containing that Dependent Variable must follow the same division.
 >    - For example, if **ResponseTime** is divided according to **3 TaskType × 2 Difficulty = 6 within-subjects conditions**, there must be exactly **six columns** containing **ResponseTime**. These six columns should represent the six mutually exclusive subsets of the original **ResponseTime** data.
@@ -280,7 +283,7 @@ This system currently supports the interpretation of results from the following 
 
 - **Mann–Whitney U Test**: Use this method when your data are **non-continuous and ordinal**, such as questionnaire scores. The analysis is performed by grouping the data using **Between-subjects factors**, and only **two groups** can be compared at a time.
 
-- **Kruskal–Wallis Test**: Use this method when your data are **non-continuous and ordinal**, such as questionnaire scores. The analysis is performed by grouping the data using **Between-subjects factors**, and **more than two groups** can be compared at a time.
+- **Kruskal–Wallis H Test**: Use this method when your data are **non-continuous and ordinal**, such as questionnaire scores. The analysis is performed by grouping the data using **Between-subjects factors**, and **more than two groups** can be compared at a time.
 
 The following sections will introduce, step by step, how to use **IBM SPSS Statistics** to perform these four types of analyses and how to export the results as an Excel file.
 
@@ -310,7 +313,7 @@ The following sections will introduce, step by step, how to use **IBM SPSS Stati
 
 11. Click **OK** to perform the analysis.
 
-12. Export the analysis results. Please refer to the [**Export Analysis Results**](#export) section for instructions.
+12. Export the analysis results. Please refer to the [**Export Analysis Results**](#export-analysis-results) section for instructions.
 
 [back to toc](#table-of-contents)
 
@@ -332,7 +335,7 @@ The following sections will introduce, step by step, how to use **IBM SPSS Stati
 
 8. Click **OK** to perform the analysis.
 
-9. Export the analysis results. Please refer to the [**Export Analysis Results**](#export) section for instructions.
+9. Export the analysis results. Please refer to the [**Export Analysis Results**](#export-analysis-results) section for instructions.
 
 [back to toc](#table-of-contents)
 
@@ -372,15 +375,15 @@ The following sections will introduce, step by step, how to use **IBM SPSS Stati
    For example:
    `MannWhitneyUTest-UserGender12-1Male,2Female`
 
-10. If you need to perform additional analyses on the **same Dependent Variables** using other **Between-subjects factors**, you can continue by selecting **Analyze > Nonparametric Tests > Legacy Dialogs > ...** to perform additional **nonparametric analyses (Mann-Whitney U Test or Kruskal-Wallis Test)**. This allows the results to be exported to the same Excel sheet.
+10. If you need to perform additional analyses on the **same Dependent Variables** using other **Between-subjects factors**, you can continue by selecting **Analyze > Nonparametric Tests > Legacy Dialogs > ...** to perform additional **nonparametric analyses (Mann-Whitney U Test or Kruskal-Wallis H Test)**. This allows the results to be exported to the same Excel sheet.
 
-   > **Note:** You should use the **Mann-Whitney U Test** only when the research design requires the Dependent Variables to be compared between **two groups** of the Between-subjects factor. If you need to compare **three or more groups**, please refer to the [**Kruskal-Wallis Test**](#kruskal-wallis-test) section.
+   > **Note:** You should use the **Mann-Whitney U Test** only when the research design requires the Dependent Variables to be compared between **two groups** of the Between-subjects factor. If you need to compare **three or more groups**, please refer to the [**Kruskal-Wallis H Test**](#kruskal-wallis-h-test) section.
 
-11. Export the analysis results. Please refer to the [**Export Analysis Results**](#export) section for instructions.
+11. Export the analysis results. Please refer to the [**Export Analysis Results**](#export-analysis-results) section for instructions.
 
 [back to toc](#table-of-contents)
 
-### Kruskal-Wallis Test
+### Kruskal-Wallis H Test
 
 1. Open **IBM SPSS Statistics**, import your **User Data Excel file**, and select the sheet you want to use.
    - The **Between-subjects factors** in the sheet must be converted to numeric values before performing the analysis. For example, if the `TrainingMethod` factor contains two conditions, `MethodA`, `MethodB` and `MethodC`, create a new column named `TrainingMethodGroup` and encode the conditions as `1`, `2` and `3`.
@@ -423,9 +426,9 @@ The following sections will introduce, step by step, how to use **IBM SPSS Stati
     - `MannWhitneyUTest-TrainingMethod13-1MethodA,3MethodC`
     - `MannWhitneyUTest-TrainingMethod23-2MethodB,3MethodC`
 
-11. If you need to perform additional analyses on the **same Dependent Variables** using other **Between-subjects factors**, you can continue by selecting **Analyze > Nonparametric Tests > Legacy Dialogs > ...** to perform additional **nonparametric analyses (Mann-Whitney U Test or Kruskal-Wallis Test)**. This allows the results to be exported to the same Excel sheet.
+11. If you need to perform additional analyses on the **same Dependent Variables** using other **Between-subjects factors**, you can continue by selecting **Analyze > Nonparametric Tests > Legacy Dialogs > ...** to perform additional **nonparametric analyses (Mann-Whitney U Test or Kruskal-Wallis H Test)**. This allows the results to be exported to the same Excel sheet.
 
-11. Export the analysis results. Please refer to the [**Export Analysis Results**](#export) section for instructions.
+11. Export the analysis results. Please refer to the [**Export Analysis Results**](#export-analysis-results) section for instructions.
 
 [back to toc](#table-of-contents)
 
@@ -446,7 +449,7 @@ Please follow these requirements:
 
 1. Select **File > Export**.
 
-2. Under **Objects to Export**, select **All visible**.
+2. Under **Objects to Export**, select **All**.
 
 3. Under **Document Type**, select **Excel 2007 and Higher (*.xlsx)**.
 
@@ -486,7 +489,7 @@ Select **Project > New Project**.
 On the **New Project** page, each page has a hint next to its title. Hover your mouse over the hint to view additional information. You can use the **`←`** and **`→`** arrow keys to navigate between pages, or press **`Enter`** to proceed to the next page.
 
 1. **Project Name**  
-   Enter the **Project Name**. The project name **cannot be changed after the project is created**, so please choose a name that clearly identifies the content of the project. There are **no restrictions on the length or format** of the project name.
+   Enter the **Project Name**. Please choose a name that clearly identifies the content of the project. There are **no restrictions on the length or format** of the project name.
 
 2. **Factor Setting**  
    Select the **Factor Setting**. You can choose a Factor Setting that is already stored in the system, or import a new `Factor Setting JSON file` or create a new `Factor Setting`.
@@ -537,6 +540,8 @@ After creating a new project, you can access your projects through **Project > O
 **Export Significant Results** automatically checks all analysis results in the **SPSS Export Excel File** for significant results and exports them to an Excel file.
 
 Effects with a **significance value (p-value) < 0.05** are classified as **significant results**. Effects with a **significance value (p-value) >= 0.05 and < 0.1** are classified as **potential results**.
+
+After clicking the green **Export** button for the desired project, please wait a few seconds to several tens of seconds. You will then be prompted to select a location to save the result file.
 
 ### Repeated Measures ANOVA and Univariate ANOVA
 
@@ -590,7 +595,9 @@ If a Dependent Variable is analyzed using the **Kruskal-Wallis H Test**, the sys
 
 After creating a new project, you can access your projects through **Project > Open Recent**. Each project provides two functions: **Export Significant Results** and **Query Analysis Details**.
 
-**Query Analysis Details** 可以協助您查詢 the **SPSS Export Excel File** 中的 Test Statistics 以及 Descriptive Statistics。
+**Query Analysis Details** can help you query the **Test Statistics** and **Descriptive Statistics** in the **SPSS Export Excel File**.
+
+Press the blue **Query** button for the desired project to begin the query. First, select the **SPSS Export** content you want to view from the form on the left, then press `Enter` or click the **Apply** button in the bottom-right corner. The query results will be displayed in the area on the right.
 
 ### Test Statistics
 
@@ -613,6 +620,10 @@ Depending on the analysis method, the table may contain different statistics, su
 * **Mauchly's W**: The test statistic used in Mauchly's Test of Sphericity. (e.g. $W = .823, \chi^2(2) = 12.45, p = .002$)
 * **Levene's Test**: The test used to assess the homogeneity of error variances in Univariate ANOVA. (e.g. $F(2, 69) = 3.21, p = .046$)
 
+> ⚠️ **Important:** When a significant result is found in a **Nonparametric Test** involving more than two groups, you should first perform a **Kruskal-Wallis H Test**, followed by pairwise **Mann-Whitney U Tests** to determine which groups differ significantly.
+> 
+> In this case, the **Test Statistics** should first report the Kruskal-Wallis H Test result, followed by the Mann-Whitney U Test results. The system has already applied a **Bonferroni correction** to the p-values of the Mann-Whitney U Tests by multiplying them by three. Therefore, you **do not need to apply the Bonferroni correction again**.
+
 [back to toc](#table-of-contents)
 
 ### Descriptive Statistics
@@ -630,6 +641,16 @@ Depending on the analysis, the table may contain information such as:
 Descriptive Statistics should be used together with **Test Statistics**. While Test Statistics determines whether an effect or difference is statistically significant, Descriptive Statistics helps you understand the actual values and direction of the observed differences.
 
 For **ANOVA** results, use **Mean (M)** and **Standard Deviation (SD)** for each group or condition to interpret the observed differences. For **Nonparametric Tests** results, use **Median (Mdn)** and **Interquartile Range (IQR)** for each group or condition to interpret the observed differences.
+
+Under each **Descriptive Statistics** section, the system lists all **Data Fields** from the User Data Excel File that were used for the current calculation, allowing you to verify that they are correct.
+
+If a warning appears, it may indicate that the **raw mean** calculated from the User Data does not match the **estimated mean** reported in the SPSS Analysis. This may be caused by:
+- Missing Data Fields in the User Data.
+- Data Fields in the User Data are not mutually independent.
+- Incorrect Data Fields selected for the SPSS analysis.
+- Unequal sample sizes across groups.
+
+Please carefully verify that the Data Fields used in the calculation are correct before relying on the results provided by this system.
 
 [back to toc](#table-of-contents)
 

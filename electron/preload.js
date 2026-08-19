@@ -43,6 +43,7 @@ contextBridge.exposeInMainWorld('api', {
   getProjectById: (id) => ipcRenderer.invoke('get-project-by-id', id),
   addProject: (project_name, factor_id, user_data_id, spss_export_id, dpvar_dict, method_dict) =>
     ipcRenderer.invoke('add-project', project_name, factor_id, user_data_id, spss_export_id, dpvar_dict, method_dict),
+  updateProjectNameById: (id, name) => ipcRenderer.invoke('update-project-name-by-id', id, name),
   updateProjectLastUsedTimeById: (id) => ipcRenderer.invoke('update-project-last-used-time-by-id', id),
   deleteProject: (id) => ipcRenderer.invoke('delete-project', id),
 

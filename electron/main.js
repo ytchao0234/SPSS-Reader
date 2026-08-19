@@ -353,6 +353,19 @@ ipcMain.handle("get-project-by-id", (event, id)=>{
   return result || null;
 });
 
+ipcMain.handle("update-project-name-by-id", (event, id, name)=>{
+  if (!id) return null
+
+  const result = db.prepare(`
+    UPDATE project
+    SET project_name = ?
+    WHERE id = ?
+  `)
+  .run(name, id)
+
+  return result.changes > 0;
+});
+
 ipcMain.handle("update-project-last-used-time-by-id", (event, id)=>{
   if (!id) return null
 

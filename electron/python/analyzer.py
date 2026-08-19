@@ -49,9 +49,9 @@ KRUSKAL_WALLIS_H_TEST_SECTION_NAME_START_WITH = 'KruskalWallisHTest'
 MANN_WHITNEY_U_TEST_SECTION_NAME_START_WITH = 'MannWhitneyUTest'
 
 NONPARAMETRIC_TEST_ERROR_MESSAGE = (
-    f'The SPSS Export sheet may contain any number of Kruskal-Wallis and Mann-Whitney U test results.\n\n'
+    f'The SPSS Export sheet may contain any number of Kruskal-Wallis H and Mann-Whitney U test results.\n\n'
 
-    f'For the Kruskal-Wallis Test, the section names must follow the required format:\n'
+    f'For the Kruskal-Wallis H Test, the section names must follow the required format:\n'
     f'"{KRUSKAL_WALLIS_H_TEST_SECTION_NAME_START_WITH}-FactorName123-1ConditionA,2ConditionB,3ConditionC"\n'
     f'The number of conditions must be at least three.\n\n'
 
@@ -1237,7 +1237,7 @@ def getNonparametricSigResultTable(df:pd.DataFrame, df_first_col_str:pd.Series, 
 ANALYSIS_METHOD = [
     ('Repeated Measures ANOVA', canDoRepeatedMeasuresANOVA, getRepeatedMeasuresANOVASigResultTable, queryANOVASigResultTable),
     ('Univariate ANOVA', canDoUnivariateANOVA, getUnivariateANOVASigResultTable, queryANOVASigResultTable),
-    ('Nonparametric (Kruskal-Wallis Test, Mann-Whitney U Test)', canDoNonparametricTest, getNonparametricSigResultTable, queryNonparametricSigResultTable),
+    ('Nonparametric (Kruskal-Wallis H Test, Mann-Whitney U Test)', canDoNonparametricTest, getNonparametricSigResultTable, queryNonparametricSigResultTable),
 ]
 ANALYSIS_METHOD_NAMES = [
     method[0] for method in ANALYSIS_METHOD

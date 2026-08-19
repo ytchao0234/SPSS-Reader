@@ -199,3 +199,8 @@
 :deep(.v-expansion-panel) {
   --v-expansion-panel-title-min-height: 12px !important;
 }
+
+.v-text-field input {
+  font-size: 20px !important;
+  color: white;
+}

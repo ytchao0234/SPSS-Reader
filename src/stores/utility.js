@@ -35,6 +35,28 @@ export const utilityStore = defineStore('utility', () => {
         width: "50%"
     }
   ];
+  const project_headers = [
+    {
+      title: '',
+      key: 'actions',
+      width: '10%'
+    },
+    {
+      title: 'Project Name',
+      key: 'project_name',
+      width: '40%'
+    },
+    {
+      title: 'Last Used Time',
+      key: 'last_used_time',
+      width: '25%'
+    },
+    {
+      title: 'Created Time',
+      key: 'created_time',
+      width: '25%'
+    }
+  ]
   const bs_headers = [
     {
         title: "Between-subjects Factor",
@@ -101,7 +123,7 @@ export const utilityStore = defineStore('utility', () => {
   const analysis_methods = [
     'Repeated Measures ANOVA',
     'Univariate ANOVA',
-    'Nonparametric (Kruskal-Wallis Test, Mann-Whitney U Test)'
+    'Nonparametric (Kruskal-Wallis H Test, Mann-Whitney U Test)'
   ]
   const analysis_method_headers = [
     {
@@ -364,7 +386,7 @@ If any errors are found, please modify the SPSS export Excel file on Page 5 or a
     is_dialog_opened,
 
     // Tables
-    factor_headers, file_headers, 
+    factor_headers, file_headers, project_headers,
     bs_headers, ws_headers,
     factor_headers_in_projects, file_headers_in_projects,
     analysis_methods, analysis_method_headers,

@@ -31,7 +31,7 @@
 
       <v-data-table-virtual
         v-model="selected"
-        :headers="headers"
+        :headers="utility.project_headers"
         :items="project_items"
         item-value="id"
         height="calc(100vh - 240px)"
@@ -66,6 +66,19 @@
               :dpvar_dict="item.dpvar_dict"
               :method_dict="item.method_dict"
               @on-close="lastUsed(item.id)"
+            />
+          </div>
+        </template>
+
+        <template v-if="!select_mode" v-slot:item.project_name="{ item }">
+          <div class="d-flex align-center ga-1">
+            <span>{{ item.project_name }}</span>
+
+            <EditTextDialog
+              title=""
+              label="Project Name"
+              :src-text="item.project_name"
+              @update:src-text="onUpdateProjectName($event, item.id)"
             />
           </div>
         </template>
@@ -169,29 +182,7 @@ import FactorTable from '@/components/Props/Factor/FactorTable.vue'
 import DownloadButton from '@/components/Props/DownloadButton.vue'
 import ExportSigBtn from '@/components/Props/Project/ExportSigBtn.vue'
 import QueryDetailBtn from '@/components/Props/Project/QueryDetailBtn.vue'
-
-const headers = [
-  {
-    title: '',
-    key: 'actions',
-    width: '10%'
-  },
-  {
-    title: 'Project Name',
-    key: 'project_name',
-    width: '40%'
-  },
-  {
-    title: 'Last Used Time',
-    key: 'last_used_time',
-    width: '25%'
-  },
-  {
-    title: 'Created Time',
-    key: 'created_time',
-    width: '25%'
-  }
-]
+import EditTextDialog from '../Props/EditTextDialog.vue'
 
 const project_items = ref([])
 const factor_items = ref([])
@@ -315,5 +306,15 @@ async function deleteSelected() {
   select_mode.value = false
   selected.value = []
   await refresh()
+}
+
+async function onUpdateProjectName(value, project_id) {
+  await window.api.updateProjectNameById(project_id, value)
+  const project = await window.api.getProjectById(project_id)
+  const index = project_items.value.findIndex(item => item.id === project_id)
+  project_items.value[index].project_name = project.project_name
+
+  await window.api.updateProjectLastUsedTimeById(project_id)
+  lastUsed(project_id)
 }
 </script>

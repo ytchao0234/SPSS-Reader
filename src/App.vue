@@ -133,6 +133,9 @@ function onListEnter() {
 }
 
 function handleSelect({ id }) {
+  clearTimeout(closeTimer)
+  menu.value = false
+
   if (id === store.current_page) {
     store.refreshCurrentPage()
   }
